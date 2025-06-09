@@ -12,7 +12,6 @@ namespace QuizApp
 
         public static Question QuestionBuilder(int type)
         {
-
             List<string> answers = new();
             Console.WriteLine("Enter the Question");
             string? questionHead = Console.ReadLine();
@@ -22,8 +21,16 @@ namespace QuizApp
 
                 for (int i = 0; i < 4; i++)
                 {
-                    Console.Write($"{i + 1}.");
-                    answers.Add(Console.ReadLine());
+                    Console.Write($"{i + 1}. ");
+                    string? answer = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(answer))
+                    {
+                        Console.WriteLine("Invalid Choice, please enter a non-empty answer.");
+                        i--;
+                        continue;
+                    }
+
+                    answers.Add(answer);
                 }
             }
             else
@@ -56,12 +63,17 @@ namespace QuizApp
     }
     abstract internal class Question
     {
-        public string QuestionHead { get; set; }
-        public List<string> Answers { get; set; }
-        public int IndexRightAnswer { get; set; }
-        public double Degree { get; set; }
+        public string QuestionHead { get; set; } = "Unknown Question";
+        public List<string> Answers { get; set; } = new();
+        public int IndexRightAnswer { get; set; } = -1;
+        public double Degree { get; set; } = -1;
 
-        public abstract Question CreateQuestion(int type);
+        public abstract Question CreateQuestion(int type = 4);
+
+        public override string ToString()
+        {
+            return $"Correct:{IndexRightAnswer} Degree:{Degree}";
+        }
     }
 
     class MultiAnswers : Question

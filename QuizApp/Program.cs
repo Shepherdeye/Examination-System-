@@ -4,10 +4,13 @@
     {
         static void Main(string[] args)
         {
-         
+
             //Question question = new MultiAnswers();
-            Question question = new BoolQuestion();
-            question.CreateQuestion(2);
+            Exam exam = new PracticeExam();
+            exam.CreateExam(1);
+            Console.WriteLine(exam);
+
+
 
         }
     }
