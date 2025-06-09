@@ -6,14 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuizApp
 {
-    //class ExamBuilder
-    //{
 
-    //    public static List<Question> BuildExam
-    //    {
-
-    //    }
-    //}
     abstract internal class Exam
     {
         public DateTime ExamDate { get; set; } = DateTime.Now;
@@ -26,7 +19,7 @@ namespace QuizApp
 
         public abstract List<Question> CreateExam(int numberOfQuestions);
 
-        public abstract void StartExam();
+        public abstract string StartExam();
         public override string ToString()
         {
             return $"Date:{this.ExamDate} QuestionsCount :{Questions.Count}";
@@ -41,15 +34,15 @@ namespace QuizApp
 
         public override List<Question> CreateExam(int numberOfQuestions)
         {
-           
-
+            Console.WriteLine("Enter The title of Exam");
+            ExamTitle = Console.ReadLine();
             for (int i = 0; i < numberOfQuestions; i++)
             {
                 Console.WriteLine($"\nEnter the type of Question:\n1. Multi Choice\n2. True Or False");
 
 
                 int qChoice = Convert.ToInt32(Console.ReadLine());
-                if(qChoice !=1 && qChoice != 2)
+                if (qChoice != 1 && qChoice != 2)
                 {
                     Console.WriteLine("Invalid choice, please enter 1 or 2.");
                     i--;
@@ -73,18 +66,55 @@ namespace QuizApp
 
 
             }
-                //this.Questions.AddRange(exam);
+            //this.Questions.AddRange(exam);
 
-                return Questions;
+            return Questions;
         }
 
-        public override void StartExam()
+        public override string StartExam()
         {
-            throw new NotImplementedException();
+            List<string> typedAnswers = new List<string>();
+
+            double total = default;
+
+            Console.WriteLine($"Exam Name:{ExamTitle}\nExam Date:{ExamDate}");
+
+            int answer = default;
+
+            for (int i = 0; i < this.Questions.Count; i++)
+            {
+                total += Questions[i].Degree;
+                Console.WriteLine($"Q{i + 1} of {Questions.Count}");
+                Console.WriteLine($"Q{i + 1}:{Questions[i].QuestionHead}?");
+                for (int j = 0; j < Questions[i].Answers.Count; j++)
+                {
+                    Console.WriteLine($"{j + 1}.{Questions[i].Answers[j]}");
+
+                }
+
+                answer = Convert.ToInt32(Console.ReadLine());
+
+                if (answer - 1 == Questions[i].IndexRightAnswer)
+                {
+                    Score += Questions[i].Degree;
+                    typedAnswers.Add($"{i + 1}=>{answer}=>correct");
+
+                }
+
+                typedAnswers.Add($"{i + 1}=>{answer}=>Wrong");
+
+            }
+            if (Score < total / 2)
+                Console.WriteLine($"Failed, you get {Score} from {total}\n");
+            else
+                Console.WriteLine($"Congratulation, you get {Score} from {total}\n");
+
+            return $"{String.Join(",", typedAnswers)}\n";
+
         }
 
 
-       
+
     }
 
 
