@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,15 +12,12 @@ namespace QuizApp
     {
         public DateTime ExamDate { get; set; } = DateTime.Now;
         public string ExamTitle { get; set; } = "Unknown Exam";
-
         public List<Question> Questions { get; set; } = new();
-
         public double Score { get; protected set; }
-
 
         public abstract List<Question> CreateExam(int numberOfQuestions);
 
-        public abstract string StartExam();
+        public abstract void StartExam();
         public override string ToString()
         {
             return $"Date:{this.ExamDate} QuestionsCount :{Questions.Count}";
@@ -27,11 +25,8 @@ namespace QuizApp
 
     }
 
-
     class PracticeExam : Exam
     {
-
-
         public override List<Question> CreateExam(int numberOfQuestions)
         {
             Console.WriteLine("Enter The title of Exam");
@@ -56,14 +51,9 @@ namespace QuizApp
                 }
                 else
                 {
-
                     Question question = new BoolQuestion().CreateQuestion();
                     this.Questions.Add(question);
-
                 }
-
-
-
 
             }
             //this.Questions.AddRange(exam);
@@ -71,7 +61,7 @@ namespace QuizApp
             return Questions;
         }
 
-        public override string StartExam()
+        public override void StartExam()
         {
             List<string> typedAnswers = new List<string>();
 
@@ -97,11 +87,15 @@ namespace QuizApp
                 if (answer - 1 == Questions[i].IndexRightAnswer)
                 {
                     Score += Questions[i].Degree;
-                    typedAnswers.Add($"{i + 1}=>{answer}=>correct");
+                    typedAnswers.Add($"{i + 1}.{this.Questions[i].Answers[answer-1]}=>correct");
 
                 }
+                else
+                {
 
-                typedAnswers.Add($"{i + 1}=>{answer}=>Wrong");
+                    typedAnswers.Add($"{i + 1}.{this.Questions[i].Answers[answer-1]}=>Wrong");
+                }
+
 
             }
             if (Score < total / 2)
@@ -109,7 +103,9 @@ namespace QuizApp
             else
                 Console.WriteLine($"Congratulation, you get {Score} from {total}\n");
 
-            return $"{String.Join(",", typedAnswers)}\n";
+
+            Console.WriteLine($"Check your Answers\n{String.Join(",\n", typedAnswers)}");
+            
 
         }
 

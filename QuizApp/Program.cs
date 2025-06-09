@@ -7,7 +7,7 @@
 
             //Question question = new MultiAnswers();
             Exam exam = new PracticeExam();
-            exam.CreateExam(1);
+            exam.CreateExam(2);
             exam.StartExam();
 
 
