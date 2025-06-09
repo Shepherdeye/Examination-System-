@@ -4,7 +4,11 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+         
+            //Question question = new MultiAnswers();
+            Question question = new BoolQuestion();
+            question.CreateQuestion(2);
+
         }
     }
 }
