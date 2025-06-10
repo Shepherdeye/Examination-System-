@@ -130,7 +130,7 @@ namespace QuizApp
                 Console.WriteLine($"Congratulation, you get {Score} from {total}\n");
 
             
-            Console.WriteLine($"Check your Answers\n\n {String.Join(",\n", typedAnswers)}");
+            Console.WriteLine($"Check your Answers\n\n{String.Join(",\n", typedAnswers)}");
 
         }
 
