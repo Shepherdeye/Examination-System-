@@ -13,7 +13,7 @@ namespace QuizApp
         public DateTime ExamDate { get; protected set; } = DateTime.Now;
         public string ExamTitle { get; protected set; } = "Unknown Exam";
         public List<Question> Questions { get; protected set; } = new();
-        public double Score { get; protected set; }
+        public double Score { get; protected set; } = 0.0;
 
         public abstract List<Question> CreateExam(int numberOfQuestions);
 

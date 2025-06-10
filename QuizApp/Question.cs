@@ -186,6 +186,7 @@ namespace QuizApp
 
             Question question = new MultiAnswers()
             {
+                Difficulty=level,
                 QuestionHead = questionHead,
                 Answers = answers,
                 IndexRightAnswer = right,
