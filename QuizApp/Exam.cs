@@ -116,12 +116,12 @@ namespace QuizApp
                 if (answer - 1 == Questions[i].IndexRightAnswer)
                 {
                     Score += Questions[i].Degree;
-                    typedAnswers.Add($"{i + 1}.{this.Questions[i].Answers[answer - 1]}=> Correct");
+                    typedAnswers.Add($"{i + 1}.'{this.Questions[i].Answers[answer - 1]}' => Correct");
                 }
                 else
                 {
 
-                    typedAnswers.Add($"{i + 1}.{this.Questions[i].Answers[answer - 1]}=> Wrong");
+                    typedAnswers.Add($"{i + 1}.'{this.Questions[i].Answers[answer - 1]}' => Wrong");
                 }
             }
             if (Score < total / 2)

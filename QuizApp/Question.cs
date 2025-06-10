@@ -64,10 +64,10 @@ namespace QuizApp
     abstract internal class Question
     {
         public string QuestionHead { get; protected set; } = "Unknown Question";
+        public string Difficulty { get; set; } 
         public List<string> Answers { get; protected set; } = new();
         public int IndexRightAnswer { get; protected set; } = -1;
         public double Degree { get; protected set; } = -1;
-
         public abstract Question CreateQuestion(int type = 4);
 
         public override string ToString()
@@ -82,8 +82,26 @@ namespace QuizApp
         public override Question? CreateQuestion(int type = 4)
         {
             List<string> answers = new();
+
+            // select the difficulty of the question
+            Console.WriteLine("Enter the Difficulty Of question");
+
+            string level = default;
+            do
+            {
+                level = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(level) || string.IsNullOrWhiteSpace(level))
+                {
+                    Console.WriteLine("Invalid input");
+
+                }
+
+            } while (string.IsNullOrEmpty(level) || string.IsNullOrWhiteSpace(level));
+
+            // head of question
             Console.WriteLine("Enter the Question");
-            string? questionHead =default;
+            string? questionHead = default;
 
             do
             {
@@ -97,7 +115,9 @@ namespace QuizApp
 
             } while (string.IsNullOrEmpty(questionHead) || string.IsNullOrWhiteSpace(questionHead));
 
+           
 
+            //options of questions
             if (type == 4)
             {
                 Console.WriteLine("Enter Your choices ");
@@ -124,6 +144,9 @@ namespace QuizApp
                 answers.Add("False");
 
             }
+
+
+            //select the right answer
             Console.WriteLine("Enter right choose number");
             string? input = default;
 
@@ -142,21 +165,24 @@ namespace QuizApp
 
             if (right < 0 || right >= type) return null;
 
+
+            //select the degre of the question
             Console.WriteLine("Enter The degree of Question");
             string? degInput = default;
-            
 
-            do {
+            do
+            {
                 degInput = Console.ReadLine();
-                if(string.IsNullOrEmpty(degInput) || string.IsNullOrWhiteSpace(degInput))
+                if (string.IsNullOrEmpty(degInput) || string.IsNullOrWhiteSpace(degInput))
                 {
                     Console.WriteLine("Failed, please enter a valid input");
                 }
 
-            } while(string.IsNullOrEmpty(degInput) || string.IsNullOrWhiteSpace(degInput));
+            } while (string.IsNullOrEmpty(degInput) || string.IsNullOrWhiteSpace(degInput));
 
-            //double.TryParse(degInput, out double degree);
             double degree = Convert.ToDouble(degInput);
+
+            // create the returned question
 
             Question question = new MultiAnswers()
             {
