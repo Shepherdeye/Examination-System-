@@ -13,7 +13,6 @@ namespace QuizApp
 
        
 
-
         public static void StartNewExam(Exam exam)
         {
             exam.StartExam();

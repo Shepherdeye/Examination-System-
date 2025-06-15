@@ -161,6 +161,11 @@ namespace QuizApp
 
             } while (string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input));
             int right = Convert.ToInt32(input) - 1;
+            if(right < 0 || right >= answers.Count)
+            {
+                Console.WriteLine("Invalid right answer index, it should be between 1 and " + answers.Count);
+                return null;
+            }
 
 
             if (right < 0 || right >= type) return null;
